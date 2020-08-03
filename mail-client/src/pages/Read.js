@@ -19,5 +19,11 @@ export default function Read() {
       })
     );
   }, []);
-  return;
+  return (
+    <div>
+      <p>{detail.from}</p>
+      <p>{detail.subject}</p>
+      <p>{detail.text}</p>
+    </div>
+  );
 }
