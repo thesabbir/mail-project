@@ -7,6 +7,7 @@ import SuspenseLoader from "../components/SuspenseLoader";
 import styles from "./styles.module.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Condition from "../components/Condition";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -23,12 +24,15 @@ export default function Home() {
       <div className={styles.pageContainer}>
         <Header />
         <div className={styles.contents}>
-          {mails.loading && <SuspenseLoader />}
-          <ul>
+          <Condition check={mails.loading}>
+            <SuspenseLoader />
+          </Condition>
+          <h3>Inbox</h3>
+          <ul className={styles.mailList}>
             {mails.messages.map((message) => (
-              <li>
-                <Link to={`/read/${message.sequence}`}>{message.subject}</Link>
-              </li>
+              <Link to={`/read/${message.sequence}`}>
+                <li>{message.subject}</li>
+              </Link>
             ))}
           </ul>
         </div>

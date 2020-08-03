@@ -7,6 +7,7 @@ import SuspenseLoader from "../components/SuspenseLoader";
 import styles from "./styles.module.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Condition from "../components/Condition";
 
 export default function Read() {
   useSetup();
@@ -30,11 +31,14 @@ export default function Read() {
       <div className={styles.pageContainer}>
         <Header />
         <div className={styles.mailContents}>
-          {mails.loading && <SuspenseLoader />}
-          <p>From: {detail.from}</p>
-          <p>Subject: {detail.subject}</p>
-
-          <p dangerouslySetInnerHTML={{ __html: detail.html }} />
+          <Condition check={mails.loading}>
+            <SuspenseLoader />
+          </Condition>
+          <Condition check={!mails.loading}>
+            <p>From: {detail.from}</p>
+            <p>Subject: {detail.subject}</p>
+            <p dangerouslySetInnerHTML={{ __html: detail.html }} />
+          </Condition>
         </div>
         <Footer />
       </div>

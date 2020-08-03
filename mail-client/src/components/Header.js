@@ -9,7 +9,9 @@ export default function Header() {
   const location = useLocation();
   const toCompose = () => navigate("/compose");
   const toHome = () => navigate("/");
-  const composePage = () => location.pathname.includes("compose");
+  const hideCompose = () =>
+    location.pathname.includes("compose") ||
+    location.pathname.includes("setup");
 
   return (
     <header className={styles.header}>
@@ -17,7 +19,7 @@ export default function Header() {
         SweetBox
       </h3>
       <div>
-        <Condition check={!composePage()}>
+        <Condition check={!hideCompose()}>
           <Button onClick={toCompose}>Compose</Button>
         </Condition>
       </div>

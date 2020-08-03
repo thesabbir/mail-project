@@ -1,25 +1,47 @@
 .pageContainer {
-    display: grid;
-    min-height: 100vh;
-    grid-template-rows: auto 3fr auto;
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 3fr auto;
 }
 .mailContents {
-    max-width: 80%;
-    overflow: hidden;
-    margin: 0 auto;
-    overflow-wrap: break-word;
+  max-width: 80%;
+  overflow: hidden;
+  margin: 0 auto;
+  overflow-wrap: break-word;
 }
 
 .contents {
-    width: 80%;
-    margin: auto;
+  width: 80%;
+  margin: auto;
 }
 
 .splitCompose {
-    display: grid;
-    grid-template-columns: 50% auto;
+  display: grid;
+  grid-template-columns: 50% auto;
 }
 
 .composeInputs > textarea {
-    width: 100%;
+  width: 100%;
+}
+.setupPageForm {
+  width: 400px;
+  margin: 0 auto;
+}
+.mailList {
+  list-style: none;
+  width: 100%;
+}
+.mailList li {
+  width: 100%;
+  padding: 10px 20px;
+  color: #455a64;
+}
+
+.mailList li:hover {
+  background: #ededed;
+}
+
+.mailList a,
+.mailList a:visited {
+  text-decoration: none;
 }

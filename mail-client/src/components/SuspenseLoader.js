@@ -8,8 +8,9 @@ export default function SuspenseLoader() {
       color="secondary"
       style={{
         position: "absolute",
-        width: "100%",
+        width: "100vw",
         top: 0,
+        left: 0,
       }}
     />
   );
