@@ -12,7 +12,7 @@ RUN apk update && apk add openssl yarn
 
 # set env
 ENV NODE_ENV=production
-
+ENV PATH /mail-server/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
@@ -21,3 +21,6 @@ RUN yarn --frozen-lockfile
 
 # copy
 COPY . ./
+
+EXPOSE 4000
+CMD ["yarn", "start"]

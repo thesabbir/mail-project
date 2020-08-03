@@ -2,37 +2,24 @@ version: '3.7'
 
 services:
   mail-prod-api:
-    container_name: mail-api
-    restart: unless-stopped
+    container_name: mail-prod-api
     build:
       context: ./mail-server
       dockerfile: Dockerfile
-    entrypoint: ["yarn", "start"]
-    volumes:
-      - ./mail-server:/mail-server
-    expose:
-      - '4000'
-  static-app:
-    container_name: mail-client-static
+  mail-prod-static-app:
+    container_name: mail-prod-static-app
     build:
       context: ./mail-client
       dockerfile: Dockerfile
-    links:
-      - mail-prod-api
-    depends_on:
-      - mail-prod-api
     volumes:
-      - ./mail-client:/mail-client
       - build:/mail-client/build
-
   reverse-proxy:
     container_name: mail-client-proxy
-    restart: unless-stopped
     image: fholzer/nginx-brotli:latest
     links:
-      - static-app
+      - mail-prod-static-app
     depends_on:
-      - static-app
+      - mail-prod-static-app
     volumes:
       - build:/etc/nginx/html
       - ./nginx/default.nginx:/etc/nginx/conf.d/default.conf

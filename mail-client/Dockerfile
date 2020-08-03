@@ -12,6 +12,7 @@ RUN apk update && apk add openssl yarn
 
 # set env
 ENV NODE_ENV=production
+ENV PATH /mail-client/node_modules/.bin:$PATH
 
 
 # install app dependencies
