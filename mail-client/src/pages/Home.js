@@ -4,6 +4,8 @@ import { fetchRecentMail } from "../redux/mailSlice";
 import useSetup from "../useSetup";
 import { Link } from "react-router-dom";
 import SuspenseLoader from "../components/SuspenseLoader";
+import styles from "./styles.module.css";
+import Header from "../components/Header";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -16,21 +18,20 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <p>Home Page</p>
-      <p>
-        <Link to="/compose">New Mail</Link>
-      </p>
-      <div>
-        {mails.loading && <SuspenseLoader />}
-        <ul>
-          {mails.messages.map((message) => (
-            <li>
-              <Link to={`/read/${message.sequence}`}>{message.subject}</Link>
-            </li>
-          ))}
-        </ul>
+    <React.Fragment>
+      <div className={styles.pageContainer}>
+        <Header />
+        <div>
+          {mails.loading && <SuspenseLoader />}
+          <ul>
+            {mails.messages.map((message) => (
+              <li>
+                <Link to={`/read/${message.sequence}`}>{message.subject}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
