@@ -4,6 +4,9 @@ import { fetchMailDetails } from "../redux/mailSlice";
 import { useParams } from "react-router-dom";
 import useSetup from "../useSetup";
 import SuspenseLoader from "../components/SuspenseLoader";
+import styles from "./styles.module.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Read() {
   useSetup();
@@ -23,12 +26,18 @@ export default function Read() {
   }, []);
 
   return (
-    <div>
-      {mails.loading && <SuspenseLoader />}
-      <p>Read Mail</p>
-      <p>{detail.from}</p>
-      <p>{detail.subject}</p>
-      <p>{detail.text}</p>
-    </div>
+    <React.Fragment>
+      <div className={styles.pageContainer}>
+        <Header />
+        <div className={styles.mailContents}>
+          {mails.loading && <SuspenseLoader />}
+          <p>From: {detail.from}</p>
+          <p>Subject: {detail.subject}</p>
+
+          <p dangerouslySetInnerHTML={{ __html: detail.html }} />
+        </div>
+        <Footer />
+      </div>
+    </React.Fragment>
   );
 }

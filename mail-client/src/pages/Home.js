@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import SuspenseLoader from "../components/SuspenseLoader";
 import styles from "./styles.module.css";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function Home() {
     <React.Fragment>
       <div className={styles.pageContainer}>
         <Header />
-        <div>
+        <div className={styles.contents}>
           {mails.loading && <SuspenseLoader />}
           <ul>
             {mails.messages.map((message) => (
@@ -31,6 +32,7 @@ export default function Home() {
             ))}
           </ul>
         </div>
+        <Footer />
       </div>
     </React.Fragment>
   );

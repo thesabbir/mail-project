@@ -1,3 +1,25 @@
 .pageContainer {
     display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 3fr auto;
+}
+.mailContents {
+    max-width: 80%;
+    overflow: hidden;
+    margin: 0 auto;
+    overflow-wrap: break-word;
+}
+
+.contents {
+    width: 80%;
+    margin: auto;
+}
+
+.splitCompose {
+    display: grid;
+    grid-template-columns: 50% auto;
+}
+
+.composeInputs > textarea {
+    width: 100%;
 }
