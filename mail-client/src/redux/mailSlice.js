@@ -16,6 +16,10 @@ export const fetchMailDetails = createAsyncThunk(
     return response.data;
   }
 );
+export const sendMail = createAsyncThunk("mail/send", async (data) => {
+  const response = await client.post("/api/send", data);
+  return response.data;
+});
 
 const mailSlice = createSlice({
   name: "mails",

@@ -18,6 +18,9 @@ export default function Home() {
   return (
     <div>
       <p>Home Page</p>
+      <p>
+        <Link to="/compose">New Mail</Link>
+      </p>
       <div>
         {mails.loading && <SuspenseLoader />}
         <ul>

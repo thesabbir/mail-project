@@ -6,6 +6,7 @@ export const setupSlice = createSlice({
     host: null,
     email: null,
     password: null,
+    smtp: null,
   },
   reducers: {
     addUser: {

@@ -6,7 +6,7 @@ export default function useSetup() {
   const data = useSelector((store) => store.setup);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!data.email || !data.host || !data.password) {
+    if (!data.email || !data.host || !data.password || !data.smtp) {
       return navigate("/setup");
     }
   }, [data]);

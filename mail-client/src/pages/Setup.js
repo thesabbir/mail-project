@@ -29,7 +29,20 @@ export default function Setup() {
         name="password"
       />
       <br />
-      <input onChange={onChange} type="text" placeholder="host" name="host" />
+      <input
+        onChange={onChange}
+        type="text"
+        placeholder="imap/pop3 host"
+        name="host"
+      />
+      <br />
+
+      <input
+        onChange={onChange}
+        type="text"
+        placeholder="smtp host"
+        name="smtp"
+      />
       <br />
       <button onClick={onSubmit}>Submit</button>
     </div>
