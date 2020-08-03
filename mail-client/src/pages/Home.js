@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRecentMail } from "../redux/mailSlice";
-import { useNavigate } from "react-router-dom";
+import useSetup from "../useSetup";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const dispatch = useDispatch();
   const mails = useSelector((store) => store.mails);
   const data = useSelector((store) => store.setup);
-  const navigate = useNavigate();
+  useSetup();
 
   useEffect(() => {
-    if (!data.email || !data.host || !data.password) {
-      return navigate("/setup");
-    }
     dispatch(fetchRecentMail(data));
   }, []);
 
@@ -22,7 +20,9 @@ export default function Home() {
       <div>
         <ul>
           {mails.messages.map((message) => (
-            <p>{message.subject}</p>
+            <li>
+              <Link to={`/read/${message.sequence}`}>{message.subject}</Link>
+            </li>
           ))}
         </ul>
       </div>
