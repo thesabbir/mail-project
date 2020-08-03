@@ -9,9 +9,17 @@ export const fetchRecentMail = createAsyncThunk(
   }
 );
 
+export const fetchMailDetails = createAsyncThunk(
+  "mail/fetch/single",
+  async (data) => {
+    const response = await client.post("/api/mail", data);
+    return response.data;
+  }
+);
+
 const mailSlice = createSlice({
   name: "mails",
-  initialState: { messages: [], loading: "idle", error: false },
+  initialState: { messages: [], detail: {}, loading: "idle", error: false },
   reducers: {
     // non async logics
   },
@@ -21,6 +29,13 @@ const mailSlice = createSlice({
       state.messages = action.payload.messages;
     },
     [fetchRecentMail.rejected]: (state, action) => {
+      state.error = true;
+    },
+    [fetchMailDetails.fulfilled]: (state, action) => {
+      // Add mails to the state
+      state.detail = action.payload.detail;
+    },
+    [fetchMailDetails.rejected]: (state, action) => {
       state.error = true;
     },
   },
