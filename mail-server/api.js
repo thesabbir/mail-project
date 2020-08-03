@@ -4,6 +4,7 @@ import logger from "morgan";
 import dotenv from "dotenv";
 import Imap from "imap";
 import MailParser from "mailparser";
+import nodemailer from "nodemailer";
 
 dotenv.config();
 
@@ -188,6 +189,50 @@ app.post("/api/mail", (req, res) => {
     });
   });
   imap.connect();
+});
+
+app.post("/api/send", async (req, res) => {
+  const user = req.body.email;
+  const pass = req.body.password;
+  const host = req.body.host;
+  const port = req.body.port || 587;
+  const secure = port === 465;
+  const to = req.body.to;
+  const subject = req.body.subject;
+  const text = req.body.text;
+  const html = req.body.html;
+
+  try {
+    // SCALE: need a Q [redis/rabbit] to speed things up here
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure,
+      auth: {
+        user,
+        pass,
+      },
+    });
+
+    const results = await transporter.sendMail({
+      from: user,
+      to,
+      subject,
+      text,
+      html,
+    });
+
+    return res.status(201).json({
+      error: false,
+      message: "Mail sent",
+      id: results.messageId,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      error: true,
+      message: "Server error!",
+    });
+  }
 });
 
 export default app;
