@@ -1,10 +1,10 @@
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
   storage,
-  key: 'state',
-  whitelist: []
+  key: "state",
+  whitelist: ["setup"],
 };
 
 /**
@@ -12,5 +12,5 @@ const persistConfig = {
  * @param rootReducer
  * @returns {Reducer<PersistPartial, Action>}
  */
-export const createPersistReducer = rootReducer =>
+export const createPersistReducer = (rootReducer) =>
   persistReducer(persistConfig, rootReducer);

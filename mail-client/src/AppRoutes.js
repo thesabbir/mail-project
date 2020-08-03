@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Home } from "./pages";
+import { Home, Setup } from "./pages";
 import SuspenseLoader from "./components/SuspenseLoader";
 
 const AppRoutes = () => (
@@ -8,7 +8,8 @@ const AppRoutes = () => (
     <Router>
       <Suspense fallback={<SuspenseLoader />}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
+          <Route path="/setup" element={<Setup />} />
         </Routes>
       </Suspense>
     </Router>
