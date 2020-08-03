@@ -228,6 +228,7 @@ app.post("/api/send", async (req, res) => {
       id: results.messageId,
     });
   } catch (e) {
+    console.log(e);
     return res.status(500).json({
       error: true,
       message: "Server error!",
