@@ -15,7 +15,7 @@ ReactDOM.render(
 
 if (module.hot) {
   module.hot.accept("./App", async () => {
-    const NewApp = require("./App");
+    const NewApp = require("./App").default;
     ReactDOM.render(
       <React.StrictMode>
         <NewApp />
