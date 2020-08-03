@@ -19,7 +19,7 @@ export const fetchMailDetails = createAsyncThunk(
 
 const mailSlice = createSlice({
   name: "mails",
-  initialState: { messages: [], detail: {}, loading: "idle", error: false },
+  initialState: { messages: [], detail: {}, loading: false, error: false },
   reducers: {
     // non async logics
   },
@@ -27,16 +27,28 @@ const mailSlice = createSlice({
     [fetchRecentMail.fulfilled]: (state, action) => {
       // Add mails to the state
       state.messages = action.payload.messages;
+      state.loading = false;
+    },
+    [fetchRecentMail.pending]: (state, action) => {
+      // Add mails to the state
+      state.loading = true;
     },
     [fetchRecentMail.rejected]: (state, action) => {
       state.error = true;
+      state.loading = false;
     },
     [fetchMailDetails.fulfilled]: (state, action) => {
       // Add mails to the state
-      state.detail = action.payload.detail;
+      state.detail[action.payload.detail.sequence] = action.payload.detail;
+      state.loading = false;
+    },
+    [fetchMailDetails.pending]: (state, action) => {
+      // Add mails to the state
+      state.loading = true;
     },
     [fetchMailDetails.rejected]: (state, action) => {
       state.error = true;
+      state.loading = false;
     },
   },
 });

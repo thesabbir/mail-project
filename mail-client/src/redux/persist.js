@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 const persistConfig = {
   storage,
   key: "state",
-  whitelist: ["setup"],
+  whitelist: ["setup", "mails"],
 };
 
 /**
