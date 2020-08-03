@@ -1,0 +1,57 @@
+proxy_cache_path /tmp/cacheapi levels=1:2 keys_zone=microcacheapi:100m max_size=1g inactive=1d use_temp_path=off;
+add_header X-Cache-Status $upstream_cache_status;
+
+gzip_disable "msie6";
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 32 16k;
+gzip_min_length 0;
+gzip_types image/jpeg image/bmp image/svg+xml text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon;
+
+brotli_comp_level 4;
+brotli_buffers 32 8k;
+brotli_min_length 100;
+brotli_types image/jpeg image/bmp image/svg+xml text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript image/x-icon application/vnd.ms-fontobject application/x-font-ttf font/opentype;
+
+
+server {
+
+    listen 80 default_server;
+    #    listen 443 http2 default_server;
+
+    location / {
+        root   /etc/nginx/html;
+        index  index.html;
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api {
+        proxy_cache microcacheapi;
+        proxy_cache_valid 200 1s;
+        proxy_cache_use_stale updating;
+        proxy_cache_background_update on;
+        proxy_cache_lock on;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_pass http://mail-prod-api:4000;
+        proxy_redirect off;
+    }
+
+
+    error_page   500 502 503 504  /50x.html;
+
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    location ~* \.(jpg|jpeg|png|gif|ico)$ {
+        expires 1d;
+    }
+    location ~* \.(css|js)$ {
+        expires 1d;
+    }
+
+}

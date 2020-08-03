@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: mail-api
+    restart: unless-stopped
+    build:
+      context: ./mail-server
+      dockerfile: Dockerfile.dev
+    entrypoint: ["yarn", "start:dev"]
+    volumes:
+      - ./mail-server:/mail-server
+      - /mail-server/node_modules
+    ports:
+      - '4000:4000'
+  app:
+    container_name: mail-client
+    build:
+      context: ./mail-client
+      dockerfile: Dockerfile.dev
+    entrypoint: ["yarn", "start"]
+    links:
+      - api
+    depends_on:
+      - api
+    volumes:
+      - ./mail-client:/mail-client
+      - /mail-client/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+

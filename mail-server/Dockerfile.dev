@@ -1,0 +1,22 @@
+# pull official base image
+FROM node:14.5.0-alpine3.12 as build
+
+LABEL version=1.0.1
+LABEL maintainer="sabbiirr@gmail.com"
+
+# set working directory
+WORKDIR /mail-server
+
+# install yarn
+RUN apk update && apk add openssl yarn
+
+# set env
+ENV NODE_ENV=development
+
+
+# install app dependencies
+COPY package.json ./
+COPY yarn.lock ./
+
+# copy
+COPY . ./
